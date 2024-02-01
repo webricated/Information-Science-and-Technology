@@ -1,0 +1,80 @@
+```cmd
+2. CSS(Inline,Internal and External)
+
+File Name - CSS.html
+
+
+<html>
+<head>
+<style type="text/css"> body
+{
+background-image:url('images/cse.png');
+background-repeat:no-repeat; 
+background-position:center center; 
+background-attachment:fixed; 
+background-color:pink;
+}
+a:link { text-decoration:none;color:orange; } 
+a:visited { text-decoration:none;color:red; } 
+a:hover { text-decoration:underline;color:blue; } 
+a:active { text-decoration:underline;color:purple; } 
+h3 { color:green; }
+.c1{cursor:crosshair}
+.c2{cursor:pointer}
+.c3{cursor:move}
+.c4{cursor:text}
+.c5{cursor:wait}
+.c6{cursor:help}
+</style>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body bgcolor="cyan">
+<h1 style="color:blue;text-align:center;"> CSS (Inline, Internal and External) </h1>
+<p>This Paragraph is a Not Styled</p>
+<p class="left">This Paragraph is Styled by class "Left"</p>
+<p class="center">This Paragraph is Styled by class "Center"</p>
+<p class="right">This Paragraph is Styled by class "Right"</p>
+<b>This is normal Bold</b> <br>
+<b id="headline">This Bold Text is Styled </b>
+<h2><b><a href=" ">This is a link</a></b></h2>
+<h3 class="c1">The cursor over this element is plus sign</h3>
+<h3 class="c2">The cursor over this element is a pointing hand</h3>
+<h3 class="c3">The cursor over this element is a grasping hand</h3>
+<h3 class="c4">The cursor over this element is a I bar</h3>
+<h3 class="c5">The cursor over this element is a wait</h3>
+<h3 class="c6">The cursor over this element is a question mark</h3>
+</html>
+
+
+
+
+
+File Name - style.css
+
+
+
+p.left
+{
+text-align:left; color:blue;
+font-family:Cambria; font-size:large;
+text-indent:20px;
+}
+p.center
+{
+text-align:center;
+text-decoration:underline; text-transform:uppercase; letter-spacing:-3px;
+word-spacing:20px; font-size:larger;
+}
+p.right
+{
+text-align:right; color:red;
+font-family:Tahoma; font-size:15pt;
+text-decoration:overline; font-style:italic;
+}
+b#headline
+{
+color:orange; font-size:22px; font-family:arial;
+text-decoration:underline;
+}
+
+```
