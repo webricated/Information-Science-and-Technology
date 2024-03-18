@@ -8,14 +8,11 @@
 File Name - index.html
 
 
-
-
 <html>
 <head>
 <title>WT Lab manual program no. 3</title>
 </head>
-<style> 
-h1
+<style> h1
 {
 color: red;
 text-align: center;
@@ -30,7 +27,7 @@ font-weight: bold;
 <center>
 <h1> Select the country name to find its capital</h1>
 <form name="myform">
-Select Country <select name="country" id="sbox1"  required>
+Select Country <select name="country" id="sbox1" onClick="myFunction()" required>
 <option value=""></option>
 <option value="NEW DELHI">INDIA</option>
 <option value="CANBERRA">AUSTRALIA</option>
@@ -38,11 +35,16 @@ Select Country <select name="country" id="sbox1"  required>
 <option value="LONDON">UNITEDKINGDOM</option>
 <option value="BERLIN">GERMANY</option>
 </select><br><br>
-Capital <input type="text" class="textbox1" id="sbox2" >
+Capital <input type="text" class="textbox1" id="sbox2">
 </form>
 </center>
-</body>	
-</html>
+<script>
+function myFunction()
+{	var a=document.getElementById("sbox1").value; document.getElementById("sbox2").value=a;	}
+</script>
+</body>
+</html
+
 
 
 
