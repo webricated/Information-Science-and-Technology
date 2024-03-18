@@ -1,3 +1,7 @@
+```cmd
+
+
+
 create table customer(cust_id number(5) primary key, cust_name varchar2(15));
 create table item(item_id number(4) primary key, item_name varchar2(15), price number(5));
 create table sale(bill_no number(5) primary key, bill_date date, cust_id number(5) references customer(cust_id), item_id number(4) references item(item_id), qty_sold number(4));
@@ -40,3 +44,4 @@ create view cust as (select s.bill_no, s.bill_date, c.cust_id, i.item_id, i.pric
 select * from cust;
 
 
+```
