@@ -1,3 +1,6 @@
+```cmd
+
+
 /* 4.	Consider the following relational schema for the Office of the Controller of Examinations Application. */
 
 Student (Rollno, Name, Dob, Gender, Doa, Bcode);
@@ -84,3 +87,5 @@ SELECT * FROM STUDENT S WHERE S.ROLLNO IN (SELECT E.ROLLNO FROM ENROLLS E WHERE 
 
 
 CREATE VIEW STUDATA AS SELECT E.ROLLNO, S.NAME, COUNT (E.CCODE) AS CC FROM STUDENT S, ENROLLS E WHERE E.ROLLNO = S.ROLLNO AND E.GRADE ! = 'U' GROUP BY E.ROLLNO, S.NAME;
+
+```
