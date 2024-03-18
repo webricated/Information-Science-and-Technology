@@ -1,3 +1,7 @@
+```cmd
+
+
+
 /*
 3.	Consider the Employee-pay scenario given below.
 EMPLOYEE(emp_id : integer, emp_name: string)
@@ -81,3 +85,5 @@ Create a view which lists the emp_name and his netsalary
 create view vew as select e.emp_name , (pd.basic+pd.additions-pd.deductions) netsalary from employee e, department d, paydetails pd,payroll pr where e.emp_id=pd.emp_id and d.dept_id=pd.dept_id and e.emp_id=pr.emp_id  ;
 
 select * from vew ;
+
+```
