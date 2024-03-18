@@ -1,3 +1,6 @@
+```cmd
+
+
 /* 5. Consider the schema for Movie Database:
 ACTOR (Act_id, Act_Name, Act_Gender)
 DIRECTOR (Dir_id, Dir_Name, Dir_Phone) 
@@ -139,5 +142,5 @@ FROM DIRECTOR
 WHERE DIR_NAME = ‗STEVEN SPIELBERG‘));
 
 
-
+```
 
