@@ -1,86 +1,83 @@
-CREATE TABLE PUBLISHER(NAME VARCHAR2(20) PRIMARY KEY,  PHONE INTEGER,  ADDRESS VARCHAR2 (20)); 
-CREATE TABLE BOOK(BOOK_ID INTEGER PRIMARY KEY,  TITLE VARCHAR2(20),  PUB_YEAR VARCHAR2(20), PUBLISHER_NAME REFERENCES PUBLISHER (NAME) ON DELETE CASCADE);
-CREATE TABLE BOOK_AUTHORS(AUTHOR_NAME VARCHAR2(20), BOOK_ID REFERENCES BOOK(BOOK_ID) ON DELETE CASCADE,  PRIMARY KEY (BOOK_ID, AUTHOR_NAME)); 
-CREATE TABLE LIBRARY_BRANCH (BRANCH_ID INTEGER PRIMARY KEY,  BRANCH_NAME VARCHAR2 (50), ADDRESS VARCHAR2 (50));
-CREATE TABLE BOOK_COPIES (NO_OF_COPIES INTEGER, BOOK_ID REFERENCES BOOK (BOOK_ID) ON DELETE CASCADE, BRANCH_ID REFERENCES LIBRARY_BRANCH (BRANCH_ID) ON DELETE CASCADE, PRIMARY KEY (BOOK_ID, BRANCH_ID)); 
-CREATE TABLE CARD (CARD_NO INTEGER PRIMARY KEY); 
-CREATE TABLE BOOK_LENDING (DATE_OUT DATE, DUE_DATE DATE, BOOK_ID REFERENCES BOOK (BOOK_ID) ON DELETE CASCADE, BRANCH_ID REFERENCES LIBRARY_BRANCH(BRANCH_ID) ON DELETE CASCADE, CARD_NO REFERENCES CARD (CARD_NO) ON DELETE CASCADE, PRIMARY KEY (BOOK_ID, BRANCH_ID, CARD_NO));
+/*
+3.	Consider the Employee-pay scenario given below.
+EMPLOYEE(emp_id : integer, emp_name: string)
+DEPARTMENT(dept_id: integer, dept_name:string)
+PAYDETAILS(emp_id : integer, dept_id: integer, basic: integer, deductions: integer, additions: integer, DOJ: date)
+PAYROLL(emp_id : integer, pay_date: date)
+For the above schema, perform the following:
+a) Create the tables with the appropriate integrity constraints
+b) Insert around 10 records in each of the tables
+c) List the employee details department wise
+d) List all the employee names who joined after particular date
+e) List the details of employees whose basic salary is between 10,000 and 20,000
+f) Give a count of how many employees are working in each department
+g) Give a names of the employees whose netsalary>10,000
+h) List the details for an employee_id=5
+i) Create a view which lists out the emp_name, department, basic, dedeuctions, netsalary
+j) Create a view which lists the emp_name and his netsalary 
+*/
 
-DESC PUBLISHER;
-DESC BOOK; 
-DESC BOOK_AUTHORS;
-DESC LIBRARY_BRANCH;
-DESC BOOK_COPIES;
-DESC CARD;
-DESC BOOK_LENDING;
+create table employee(emp_id int(5) primary key,emp_name varchar2(25));
+create table department(dept_id int(5) primary key,dept_name varchar2(20));
+create table paydetails(emp_id int(5) references employee(emp_id),dept_id int(5) reerences department(dept_id),basic int(7,2),deductions int(5,2),additions int(5,2),doj date);
+create table payroll(emp_id int(5)references employee(emp_id),pay_date date);
+desc employee;
+desc department;
+desc paydetails;
+desc payroll;
+insert into employee values(&emp_id,’&emp_name’);
+select * from employee;
+insert  into department values(&dept_id,’&dept_name’);
+select * from department;
+insert into paydeatils values(&emp_id,&dept_id, &basic,&deductions,&additions,&doj);
+select * from paydeatils;
+insert into payroll values(&emp_id,’&date’);
+select * from payroll;
 
-INSERT INTO PUBLISHER VALUES ('MCGRAW-HILL', 9989076587, 'BANGALORE'); 
-INSERT INTO PUBLISHER VALUES ('PEARSON', 9889076565, 'NEWDELHI'); 
-INSERT INTO PUBLISHER VALUES ('RANDOM HOUSE', 7455679345, 'HYDRABAD'); 
-INSERT INTO PUBLISHER VALUES ('HACHETTE LIVRE', 8970862340, 'CHENAI'); 
-INSERT INTO PUBLISHER VALUES ('GRUPO PLANETA', 7756120238, 'BANGALORE');
-select * from PUBLISHER;
+/*
+List all the employee names who joined after particular date
+*/
 
-INSERT INTO BOOK VALUES (1,'DBMS','JAN-2017', 'MCGRAW-HILL'); 
-INSERT INTO BOOK VALUES (2,'ADBMS','JUN-2016', 'MCGRAW-HILL'); 
-INSERT INTO BOOK VALUES (3,'CN','SEP-2016', 'PEARSON'); 
-INSERT INTO BOOK VALUES (4,'CG','SEP-2015', 'GRUPO PLANETA'); 
-INSERT INTO BOOK VALUES (5,'OS','MAY-2016', 'PEARSON');
-select * from BOOK;
+SQL>select e,empname from employee e,paydet p where e.empid=p.empid
+and p.doj>=’05-mar-06’;
 
-INSERT INTO BOOK_AUTHORS VALUES ('NAVATHE', 1); 
-INSERT INTO BOOK_AUTHORS VALUES ('NAVATHE', 2); 
-INSERT INTO BOOK_AUTHORS VALUES ('TANENBAUM', 3); 
-INSERT INTO BOOK_AUTHORS VALUES ('EDWARD ANGEL', 4); 
-INSERT INTO BOOK_AUTHORS VALUES ('GALVIN', 5);
-select * from BOOK_AUTHORS;
+/*
+List the details of employees whose basic salary is between 10k and 20k
+*/
 
-INSERT INTO LIBRARY_BRANCH VALUES (10,'RR NAGAR','BANGALORE'); 
-INSERT INTO LIBRARY_BRANCH VALUES (11,'RNSIT','BANGALORE'); 
-INSERT INTO LIBRARY_BRANCH VALUES (12,'RAJAJI NAGAR', 'BANGALORE'); 
-INSERT INTO LIBRARY_BRANCH VALUES (13,'NITTE','MANGALORE'); 
-INSERT INTO LIBRARY_BRANCH VALUES (14,'MANIPAL','UDUPI');
-select * from LIBRARY_BRANCH;
+SQL>Select empid,empname  from employee where salary between 10kand 20k;
+select e.emp_id , e.emp_name,d.dept_id , d.dept_name , pd.basic from employee e , department d , paydetails pd , payroll pr where e.emp_id=pd.emp_id and d.dept_id=pd.dept_id and e.emp_id=pr.emp_id and pd.basic between 600 and 1000;
 
-INSERT INTO BOOK_COPIES VALUES (10, 1, 10); 
-INSERT INTO BOOK_COPIES VALUES (5, 1, 11); 
-INSERT INTO BOOK_COPIES VALUES (2, 2, 12); 
-INSERT INTO BOOK_COPIES VALUES (5, 2, 13); 
-INSERT INTO BOOK_COPIES VALUES (7, 3, 14); 
-INSERT INTO BOOK_COPIES VALUES (1, 5, 10); 
-INSERT INTO BOOK_COPIES VALUES (3, 4, 11);
-select * from BOOK_COPIES;
+/*
+Give a count of how many employees are working in each department
+*/
 
-INSERT INTO CARD VALUES (100); 
-INSERT INTO CARD VALUES (101); 
-INSERT INTO CARD VALUES (102); 
-INSERT INTO CARD VALUES (103); 
-INSERT INTO CARD VALUES (104);
-select * from CARD;
+SQL>select count(empid),deptid from paydet group by deptid;
 
-INSERT INTO BOOK_LENDING VALUES ('01-JAN-17','01-JUN-17', 1, 10, 101); 
-INSERT INTO BOOK_LENDING VALUES ('11-JAN-17','11-MAR-17', 3, 14, 101); 
-INSERT INTO BOOK_LENDING VALUES ('21-FEB-17','21-APR-17', 2, 13, 101); 
-INSERT INTO BOOK_LENDING VALUES ('15-MAR-17','15-JUL-17', 4, 11, 101); 
-INSERT INTO BOOK_LENDING VALUES ('12-APR-17','12-MAY-17', 1, 11, 104); 
-select * from BOOK_LENDING;
+/*
+Give a names of the employees whose netsalary>10,000
+*/
 
-SELECT B.BOOK_ID, B.TITLE, B.PUBLISHER_NAME, A.AUTHOR_NAME, C.NO_OF_COPIES, L.BRANCH_ID  FROM BOOK B, BOOK_AUTHORS A, BOOK_COPIES C, LIBRARY_BRANCH L WHERE B.BOOK_ID=A.BOOK_ID  AND B.BOOK_ID=C.BOOK_ID  AND L.BRANCH_ID=C.BRANCH_ID;
+SQL> select empname from employee where empid in(select empid from
+paydet where basic-deduction>10000);
 
-SELECT CARD_NO FROM BOOK_LENDING  WHERE DATE_OUT BETWEEN '01-JAN-2017' AND '01-JUL-2017'  GROUP BY CARD_NO  HAVING COUNT (*)>3;
+/*
+List the details for an employee_id=5
+*/
 
-DELETE FROM BOOK 
-WHERE BOOK_ID=3;
+sql> select * from employee where empid=5;
 
-select * from BOOK;
+/*
+Create a view which lists out the emp_name, department, basic, dedeuctions, netsalary
+*/
 
-CREATE VIEW V_PUBLICATION AS SELECT PUB_YEAR  FROM BOOK;
-select * from V_PUBLICATION;
+create view vw as select e.emp_name , d.dept_name , pd.basic,pd.deductions , (pd.basic+pd.additions-pd.deductions) netsalary from employee e, department d, paydetails pd,payroll pr where e.emp_id=pd.emp_id and d.dept_id=pd.dept_id and e.emp_id=pr.emp_id  ;
 
-CREATE VIEW V_BOOKS AS  SELECT B.BOOK_ID, B.TITLE, C.NO_OF_COPIES 
-FROM BOOK B, BOOK_COPIES C, LIBRARY_BRANCH L  WHERE B.BOOK_ID=C.BOOK_ID 
-AND C.BRANCH_ID=L.BRANCH_ID;
+select * from vw ;
 
-select * from V_BOOKS;
+/*
+Create a view which lists the emp_name and his netsalary
+*/
+create view vew as select e.emp_name , (pd.basic+pd.additions-pd.deductions) netsalary from employee e, department d, paydetails pd,payroll pr where e.emp_id=pd.emp_id and d.dept_id=pd.dept_id and e.emp_id=pr.emp_id  ;
 
-
+select * from vew ;
